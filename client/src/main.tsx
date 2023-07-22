@@ -1,0 +1,25 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from "@/App";
+import '@/index.css'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Provider } from 'react-redux';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { configureStore } from '@reduxjs/toolkit';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { api } from "@/state/api"
+
+export const store = configureStore ({
+  reducer: { [api.reducerPath]: api.reducer},
+  middleware: (getDefault) => getDefault().concat(api.middleware),
+
+})
+setupListeners(store.dispatch);
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
